@@ -1,0 +1,436 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FD0636721687CDCA0003F00E /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = FD06366F1687CC6B0003F00E /* NSString+MD5Addition.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FD0636731687CDCA0003F00E /* UIDevice+IdentifierAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0636711687CC6B0003F00E /* UIDevice+IdentifierAddition.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FD0636781687D4440003F00E /* PFConnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0636771687D4440003F00E /* PFConnectViewController.m */; };
+		FD06367B1687D46E0003F00E /* PFConnectView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD06367A1687D46D0003F00E /* PFConnectView.m */; };
+		FD06367E1687D7D30003F00E /* ELCTextfieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD06367D1687D4D70003F00E /* ELCTextfieldCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FD0636811687DBED0003F00E /* standard-button.png in Resources */ = {isa = PBXBuildFile; fileRef = FD06367F1687DBED0003F00E /* standard-button.png */; };
+		FD0636821687DBED0003F00E /* standard-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD0636801687DBED0003F00E /* standard-button@2x.png */; };
+		FD063685168838A10003F00E /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD063684168838A10003F00E /* logo@2x.png */; };
+		FD06368816883E0E0003F00E /* hosticon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD06368616883E0E0003F00E /* hosticon@2x.png */; };
+		FD06368916883E0E0003F00E /* porticon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD06368716883E0E0003F00E /* porticon@2x.png */; };
+		FD06368B168908220003F00E /* aliasicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD06368A168908220003F00E /* aliasicon@2x.png */; };
+		FD16AE03167B01FB00AA0F10 /* PFJoystiqView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD16AE02167B01FB00AA0F10 /* PFJoystiqView.m */; };
+		FD16AE1A167C99C700AA0F10 /* pop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD16AE19167C99C700AA0F10 /* pop.mp3 */; };
+		FD53E3B316758CF400B16B80 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD53E3B216758CF400B16B80 /* UIKit.framework */; };
+		FD53E3B516758CF400B16B80 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD53E3B416758CF400B16B80 /* Foundation.framework */; };
+		FD53E3B716758CF400B16B80 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD53E3B616758CF400B16B80 /* CoreGraphics.framework */; };
+		FD53E3BD16758CF500B16B80 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD53E3BB16758CF500B16B80 /* InfoPlist.strings */; };
+		FD53E3BF16758CF500B16B80 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD53E3BE16758CF500B16B80 /* main.m */; };
+		FD53E3C316758CF500B16B80 /* PFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD53E3C216758CF500B16B80 /* PFAppDelegate.m */; };
+		FD53E3C516758CF500B16B80 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FD53E3C416758CF500B16B80 /* Default.png */; };
+		FD53E3C716758CF500B16B80 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD53E3C616758CF500B16B80 /* Default@2x.png */; };
+		FD53E3C916758CF500B16B80 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD53E3C816758CF500B16B80 /* Default-568h@2x.png */; };
+		FD53E3D31675F87400B16B80 /* PFGamepadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD53E3D21675F87400B16B80 /* PFGamepadViewController.m */; };
+		FD53E3D61675F8A400B16B80 /* PFGamepadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD53E3D51675F8A400B16B80 /* PFGamepadView.m */; };
+		FD53E3D91675F92C00B16B80 /* 640x1136-main-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD53E3D81675F92C00B16B80 /* 640x1136-main-bg@2x.png */; };
+		FD53E3DB1675FCB400B16B80 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD53E3DA1675FCB400B16B80 /* QuartzCore.framework */; };
+		FD53E3ED1676070900B16B80 /* CL.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD53E3EC1676070900B16B80 /* CL.mp3 */; };
+		FD53E3EF1676071500B16B80 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD53E3EE1676071500B16B80 /* AudioToolbox.framework */; };
+		FD53E429167850E400B16B80 /* 95x95-A-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD53E427167850E400B16B80 /* 95x95-A-button@2x.png */; };
+		FD53E42A167850E400B16B80 /* 95x95-B-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD53E428167850E400B16B80 /* 95x95-B-button@2x.png */; };
+		FD53E42C167855C000B16B80 /* 90x90-joystiq-button.png in Resources */ = {isa = PBXBuildFile; fileRef = FD53E42B167855C000B16B80 /* 90x90-joystiq-button.png */; };
+		FD53E42E167855C400B16B80 /* 205x205-joystiq-border.png in Resources */ = {isa = PBXBuildFile; fileRef = FD53E42D167855C400B16B80 /* 205x205-joystiq-border.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FD06366E1687CC6B0003F00E /* NSString+MD5Addition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+MD5Addition.h"; path = "PixelMote/Classes/UUID/NSString+MD5Addition.h"; sourceTree = "<group>"; };
+		FD06366F1687CC6B0003F00E /* NSString+MD5Addition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSString+MD5Addition.m"; path = "PixelMote/Classes/UUID/NSString+MD5Addition.m"; sourceTree = "<group>"; };
+		FD0636701687CC6B0003F00E /* UIDevice+IdentifierAddition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIDevice+IdentifierAddition.h"; path = "PixelMote/Classes/UUID/UIDevice+IdentifierAddition.h"; sourceTree = "<group>"; };
+		FD0636711687CC6B0003F00E /* UIDevice+IdentifierAddition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+IdentifierAddition.m"; path = "PixelMote/Classes/UUID/UIDevice+IdentifierAddition.m"; sourceTree = "<group>"; };
+		FD0636751687CEBF0003F00E /* PFJoystickDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PFJoystickDelegate.h; path = PixelMote/Classes/PFJoystickDelegate.h; sourceTree = "<group>"; };
+		FD0636761687D4440003F00E /* PFConnectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PFConnectViewController.h; path = PixelMote/Classes/PFConnectViewController.h; sourceTree = "<group>"; };
+		FD0636771687D4440003F00E /* PFConnectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFConnectViewController.m; path = PixelMote/Classes/PFConnectViewController.m; sourceTree = "<group>"; };
+		FD0636791687D46D0003F00E /* PFConnectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PFConnectView.h; path = PixelMote/Classes/PFConnectView.h; sourceTree = "<group>"; };
+		FD06367A1687D46D0003F00E /* PFConnectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFConnectView.m; path = PixelMote/Classes/PFConnectView.m; sourceTree = "<group>"; };
+		FD06367C1687D4D70003F00E /* ELCTextfieldCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ELCTextfieldCell.h; path = PixelMote/Classes/ELCTextField/ELCTextfieldCell.h; sourceTree = "<group>"; };
+		FD06367D1687D4D70003F00E /* ELCTextfieldCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ELCTextfieldCell.m; path = PixelMote/Classes/ELCTextField/ELCTextfieldCell.m; sourceTree = "<group>"; };
+		FD06367F1687DBED0003F00E /* standard-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "standard-button.png"; path = "PixelMote/Resources/standard-button.png"; sourceTree = "<group>"; };
+		FD0636801687DBED0003F00E /* standard-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "standard-button@2x.png"; path = "PixelMote/Resources/standard-button@2x.png"; sourceTree = "<group>"; };
+		FD0636831687E7E80003F00E /* PFConnectDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PFConnectDelegate.h; path = PixelMote/Classes/PFConnectDelegate.h; sourceTree = "<group>"; };
+		FD063684168838A10003F00E /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo@2x.png"; path = "PixelMote/Resources/logo@2x.png"; sourceTree = "<group>"; };
+		FD06368616883E0E0003F00E /* hosticon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "hosticon@2x.png"; path = "PixelMote/Resources/hosticon@2x.png"; sourceTree = "<group>"; };
+		FD06368716883E0E0003F00E /* porticon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "porticon@2x.png"; path = "PixelMote/Resources/porticon@2x.png"; sourceTree = "<group>"; };
+		FD06368A168908220003F00E /* aliasicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "aliasicon@2x.png"; path = "PixelMote/Resources/aliasicon@2x.png"; sourceTree = "<group>"; };
+		FD16AE01167B01FB00AA0F10 /* PFJoystiqView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PFJoystiqView.h; path = PixelMote/Classes/PFJoystiqView.h; sourceTree = "<group>"; };
+		FD16AE02167B01FB00AA0F10 /* PFJoystiqView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFJoystiqView.m; path = PixelMote/Classes/PFJoystiqView.m; sourceTree = "<group>"; };
+		FD16AE19167C99C700AA0F10 /* pop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = pop.mp3; path = PixelMote/Resources/pop.mp3; sourceTree = "<group>"; };
+		FD16AE1C167C9A4A00AA0F10 /* PFGamepadDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PFGamepadDelegate.h; path = PixelMote/Classes/PFGamepadDelegate.h; sourceTree = "<group>"; };
+		FD53E3AE16758CF400B16B80 /* PixelMote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PixelMote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD53E3B216758CF400B16B80 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FD53E3B416758CF400B16B80 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FD53E3B616758CF400B16B80 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FD53E3BA16758CF500B16B80 /* PixelMote-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PixelMote-Info.plist"; sourceTree = "<group>"; };
+		FD53E3BC16758CF500B16B80 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FD53E3BE16758CF500B16B80 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FD53E3C016758CF500B16B80 /* PixelMote-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PixelMote-Prefix.pch"; sourceTree = "<group>"; };
+		FD53E3C116758CF500B16B80 /* PFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFAppDelegate.h; sourceTree = "<group>"; };
+		FD53E3C216758CF500B16B80 /* PFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFAppDelegate.m; sourceTree = "<group>"; };
+		FD53E3C416758CF500B16B80 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		FD53E3C616758CF500B16B80 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		FD53E3C816758CF500B16B80 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		FD53E3D11675F87400B16B80 /* PFGamepadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PFGamepadViewController.h; path = PixelMote/Classes/PFGamepadViewController.h; sourceTree = "<group>"; };
+		FD53E3D21675F87400B16B80 /* PFGamepadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFGamepadViewController.m; path = PixelMote/Classes/PFGamepadViewController.m; sourceTree = "<group>"; };
+		FD53E3D41675F8A400B16B80 /* PFGamepadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PFGamepadView.h; path = PixelMote/Classes/PFGamepadView.h; sourceTree = "<group>"; };
+		FD53E3D51675F8A400B16B80 /* PFGamepadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFGamepadView.m; path = PixelMote/Classes/PFGamepadView.m; sourceTree = "<group>"; };
+		FD53E3D81675F92C00B16B80 /* 640x1136-main-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "640x1136-main-bg@2x.png"; path = "PixelMote/Resources/640x1136-main-bg@2x.png"; sourceTree = "<group>"; };
+		FD53E3DA1675FCB400B16B80 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FD53E3EC1676070900B16B80 /* CL.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = CL.mp3; path = PixelMote/Resources/CL.mp3; sourceTree = "<group>"; };
+		FD53E3EE1676071500B16B80 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		FD53E427167850E400B16B80 /* 95x95-A-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "95x95-A-button@2x.png"; path = "PixelMote/Resources/95x95-A-button@2x.png"; sourceTree = "<group>"; };
+		FD53E428167850E400B16B80 /* 95x95-B-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "95x95-B-button@2x.png"; path = "PixelMote/Resources/95x95-B-button@2x.png"; sourceTree = "<group>"; };
+		FD53E42B167855C000B16B80 /* 90x90-joystiq-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "90x90-joystiq-button.png"; path = "PixelMote/Resources/90x90-joystiq-button.png"; sourceTree = "<group>"; };
+		FD53E42D167855C400B16B80 /* 205x205-joystiq-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "205x205-joystiq-border.png"; path = "PixelMote/Resources/205x205-joystiq-border.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FD53E3AB16758CF400B16B80 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD53E3EF1676071500B16B80 /* AudioToolbox.framework in Frameworks */,
+				FD53E3DB1675FCB400B16B80 /* QuartzCore.framework in Frameworks */,
+				FD53E3B316758CF400B16B80 /* UIKit.framework in Frameworks */,
+				FD53E3B516758CF400B16B80 /* Foundation.framework in Frameworks */,
+				FD53E3B716758CF400B16B80 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FD06366D1687CC4C0003F00E /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				FD06366E1687CC6B0003F00E /* NSString+MD5Addition.h */,
+				FD06366F1687CC6B0003F00E /* NSString+MD5Addition.m */,
+				FD0636701687CC6B0003F00E /* UIDevice+IdentifierAddition.h */,
+				FD0636711687CC6B0003F00E /* UIDevice+IdentifierAddition.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		FD16AE1B167C9A0600AA0F10 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				FD16AE1C167C9A4A00AA0F10 /* PFGamepadDelegate.h */,
+				FD0636751687CEBF0003F00E /* PFJoystickDelegate.h */,
+				FD0636831687E7E80003F00E /* PFConnectDelegate.h */,
+			);
+			name = Delegates;
+			sourceTree = "<group>";
+		};
+		FD53E3A316758CF400B16B80 = {
+			isa = PBXGroup;
+			children = (
+				FD06366D1687CC4C0003F00E /* Categories */,
+				FD16AE1B167C9A0600AA0F10 /* Delegates */,
+				FD53E3D71675F91C00B16B80 /* Resources */,
+				FD53E3D016758DA300B16B80 /* ViewControllers */,
+				FD53E3CF16758D1800B16B80 /* Views */,
+				FD53E3B816758CF400B16B80 /* PixelMote */,
+				FD53E3B116758CF400B16B80 /* Frameworks */,
+				FD53E3AF16758CF400B16B80 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FD53E3AF16758CF400B16B80 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FD53E3AE16758CF400B16B80 /* PixelMote.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FD53E3B116758CF400B16B80 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FD53E3EE1676071500B16B80 /* AudioToolbox.framework */,
+				FD53E3DA1675FCB400B16B80 /* QuartzCore.framework */,
+				FD53E3B216758CF400B16B80 /* UIKit.framework */,
+				FD53E3B416758CF400B16B80 /* Foundation.framework */,
+				FD53E3B616758CF400B16B80 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FD53E3B816758CF400B16B80 /* PixelMote */ = {
+			isa = PBXGroup;
+			children = (
+				FD53E3C116758CF500B16B80 /* PFAppDelegate.h */,
+				FD53E3C216758CF500B16B80 /* PFAppDelegate.m */,
+				FD53E3B916758CF500B16B80 /* Supporting Files */,
+			);
+			path = PixelMote;
+			sourceTree = "<group>";
+		};
+		FD53E3B916758CF500B16B80 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FD53E3BA16758CF500B16B80 /* PixelMote-Info.plist */,
+				FD53E3BB16758CF500B16B80 /* InfoPlist.strings */,
+				FD53E3BE16758CF500B16B80 /* main.m */,
+				FD53E3C016758CF500B16B80 /* PixelMote-Prefix.pch */,
+				FD53E3C416758CF500B16B80 /* Default.png */,
+				FD53E3C616758CF500B16B80 /* Default@2x.png */,
+				FD53E3C816758CF500B16B80 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FD53E3CF16758D1800B16B80 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FD06367C1687D4D70003F00E /* ELCTextfieldCell.h */,
+				FD06367D1687D4D70003F00E /* ELCTextfieldCell.m */,
+				FD53E3D41675F8A400B16B80 /* PFGamepadView.h */,
+				FD53E3D51675F8A400B16B80 /* PFGamepadView.m */,
+				FD16AE01167B01FB00AA0F10 /* PFJoystiqView.h */,
+				FD16AE02167B01FB00AA0F10 /* PFJoystiqView.m */,
+				FD0636791687D46D0003F00E /* PFConnectView.h */,
+				FD06367A1687D46D0003F00E /* PFConnectView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		FD53E3D016758DA300B16B80 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				FD53E3D11675F87400B16B80 /* PFGamepadViewController.h */,
+				FD53E3D21675F87400B16B80 /* PFGamepadViewController.m */,
+				FD0636761687D4440003F00E /* PFConnectViewController.h */,
+				FD0636771687D4440003F00E /* PFConnectViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		FD53E3D71675F91C00B16B80 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FD06368A168908220003F00E /* aliasicon@2x.png */,
+				FD06368616883E0E0003F00E /* hosticon@2x.png */,
+				FD06368716883E0E0003F00E /* porticon@2x.png */,
+				FD063684168838A10003F00E /* logo@2x.png */,
+				FD53E42D167855C400B16B80 /* 205x205-joystiq-border.png */,
+				FD53E42B167855C000B16B80 /* 90x90-joystiq-button.png */,
+				FD53E427167850E400B16B80 /* 95x95-A-button@2x.png */,
+				FD53E428167850E400B16B80 /* 95x95-B-button@2x.png */,
+				FD53E3D81675F92C00B16B80 /* 640x1136-main-bg@2x.png */,
+				FD0636801687DBED0003F00E /* standard-button@2x.png */,
+				FD06367F1687DBED0003F00E /* standard-button.png */,
+				FD53E3EC1676070900B16B80 /* CL.mp3 */,
+				FD16AE19167C99C700AA0F10 /* pop.mp3 */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FD53E3AD16758CF400B16B80 /* PixelMote */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FD53E3CC16758CF500B16B80 /* Build configuration list for PBXNativeTarget "PixelMote" */;
+			buildPhases = (
+				FD53E3AA16758CF400B16B80 /* Sources */,
+				FD53E3AB16758CF400B16B80 /* Frameworks */,
+				FD53E3AC16758CF400B16B80 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PixelMote;
+			productName = PixelMote;
+			productReference = FD53E3AE16758CF400B16B80 /* PixelMote.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FD53E3A516758CF400B16B80 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = PF;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = PixelFactory;
+			};
+			buildConfigurationList = FD53E3A816758CF400B16B80 /* Build configuration list for PBXProject "PixelMote" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FD53E3A316758CF400B16B80;
+			productRefGroup = FD53E3AF16758CF400B16B80 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FD53E3AD16758CF400B16B80 /* PixelMote */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FD53E3AC16758CF400B16B80 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD53E3BD16758CF500B16B80 /* InfoPlist.strings in Resources */,
+				FD53E3C516758CF500B16B80 /* Default.png in Resources */,
+				FD53E3C716758CF500B16B80 /* Default@2x.png in Resources */,
+				FD53E3C916758CF500B16B80 /* Default-568h@2x.png in Resources */,
+				FD53E3D91675F92C00B16B80 /* 640x1136-main-bg@2x.png in Resources */,
+				FD53E3ED1676070900B16B80 /* CL.mp3 in Resources */,
+				FD53E429167850E400B16B80 /* 95x95-A-button@2x.png in Resources */,
+				FD53E42A167850E400B16B80 /* 95x95-B-button@2x.png in Resources */,
+				FD53E42C167855C000B16B80 /* 90x90-joystiq-button.png in Resources */,
+				FD53E42E167855C400B16B80 /* 205x205-joystiq-border.png in Resources */,
+				FD16AE1A167C99C700AA0F10 /* pop.mp3 in Resources */,
+				FD0636811687DBED0003F00E /* standard-button.png in Resources */,
+				FD0636821687DBED0003F00E /* standard-button@2x.png in Resources */,
+				FD063685168838A10003F00E /* logo@2x.png in Resources */,
+				FD06368816883E0E0003F00E /* hosticon@2x.png in Resources */,
+				FD06368916883E0E0003F00E /* porticon@2x.png in Resources */,
+				FD06368B168908220003F00E /* aliasicon@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FD53E3AA16758CF400B16B80 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD06367E1687D7D30003F00E /* ELCTextfieldCell.m in Sources */,
+				FD0636721687CDCA0003F00E /* NSString+MD5Addition.m in Sources */,
+				FD0636731687CDCA0003F00E /* UIDevice+IdentifierAddition.m in Sources */,
+				FD53E3BF16758CF500B16B80 /* main.m in Sources */,
+				FD53E3C316758CF500B16B80 /* PFAppDelegate.m in Sources */,
+				FD53E3D31675F87400B16B80 /* PFGamepadViewController.m in Sources */,
+				FD53E3D61675F8A400B16B80 /* PFGamepadView.m in Sources */,
+				FD16AE03167B01FB00AA0F10 /* PFJoystiqView.m in Sources */,
+				FD0636781687D4440003F00E /* PFConnectViewController.m in Sources */,
+				FD06367B1687D46E0003F00E /* PFConnectView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FD53E3BB16758CF500B16B80 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FD53E3BC16758CF500B16B80 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FD53E3CA16758CF500B16B80 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		FD53E3CB16758CF500B16B80 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FD53E3CD16758CF500B16B80 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PixelMote/PixelMote-Prefix.pch";
+				INFOPLIST_FILE = "PixelMote/PixelMote-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FD53E3CE16758CF500B16B80 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PixelMote/PixelMote-Prefix.pch";
+				INFOPLIST_FILE = "PixelMote/PixelMote-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FD53E3A816758CF400B16B80 /* Build configuration list for PBXProject "PixelMote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD53E3CA16758CF500B16B80 /* Debug */,
+				FD53E3CB16758CF500B16B80 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FD53E3CC16758CF500B16B80 /* Build configuration list for PBXNativeTarget "PixelMote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD53E3CD16758CF500B16B80 /* Debug */,
+				FD53E3CE16758CF500B16B80 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FD53E3A516758CF400B16B80 /* Project object */;
+}
