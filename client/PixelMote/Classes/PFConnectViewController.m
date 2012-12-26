@@ -34,6 +34,7 @@
         labels = [NSArray arrayWithObjects:@"Host", @"Port", @"Alias", nil];
         
         images = [NSArray arrayWithObjects:@"host",@"port",@"alias", nil];
+        defaults = @[@"", @"12345", @"nobody"];
     }
     
     return self;
@@ -80,6 +81,7 @@
     //	cell.leftImage = [self.labels objectAtIndex:indexPath.row];
     
 	cell.rightTextField.placeholder = [labels objectAtIndex:indexPath.row];
+  cell.rightTextField.text = [defaults objectAtIndex:indexPath.row];
     cell.leftImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@icon.png", [images objectAtIndex:indexPath.row]]]];
     
 	cell.indexPath = indexPath;
