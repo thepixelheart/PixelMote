@@ -39,6 +39,7 @@
 		FD53E42A167850E400B16B80 /* 95x95-B-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD53E428167850E400B16B80 /* 95x95-B-button@2x.png */; };
 		FD53E42C167855C000B16B80 /* 90x90-joystiq-button.png in Resources */ = {isa = PBXBuildFile; fileRef = FD53E42B167855C000B16B80 /* 90x90-joystiq-button.png */; };
 		FD53E42E167855C400B16B80 /* 205x205-joystiq-border.png in Resources */ = {isa = PBXBuildFile; fileRef = FD53E42D167855C400B16B80 /* 205x205-joystiq-border.png */; };
+		FDA4C897168B09CF00B493E1 /* PFNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA4C896168B09CF00B493E1 /* PFNetworkManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,8 @@
 		FD53E428167850E400B16B80 /* 95x95-B-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "95x95-B-button@2x.png"; path = "PixelMote/Resources/95x95-B-button@2x.png"; sourceTree = "<group>"; };
 		FD53E42B167855C000B16B80 /* 90x90-joystiq-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "90x90-joystiq-button.png"; path = "PixelMote/Resources/90x90-joystiq-button.png"; sourceTree = "<group>"; };
 		FD53E42D167855C400B16B80 /* 205x205-joystiq-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "205x205-joystiq-border.png"; path = "PixelMote/Resources/205x205-joystiq-border.png"; sourceTree = "<group>"; };
+		FDA4C895168B09CF00B493E1 /* PFNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PFNetworkManager.h; path = PixelMote/Classes/PFNetworkManager.h; sourceTree = "<group>"; };
+		FDA4C896168B09CF00B493E1 /* PFNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFNetworkManager.m; path = PixelMote/Classes/PFNetworkManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +134,7 @@
 		FD53E3A316758CF400B16B80 = {
 			isa = PBXGroup;
 			children = (
+				FDA4C893168B09A100B493E1 /* Managers */,
 				FD06366D1687CC4C0003F00E /* Categories */,
 				FD16AE1B167C9A0600AA0F10 /* Delegates */,
 				FD53E3D71675F91C00B16B80 /* Resources */,
@@ -232,6 +236,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		FDA4C893168B09A100B493E1 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				FDA4C895168B09CF00B493E1 /* PFNetworkManager.h */,
+				FDA4C896168B09CF00B493E1 /* PFNetworkManager.m */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -321,6 +334,7 @@
 				FD16AE03167B01FB00AA0F10 /* PFJoystiqView.m in Sources */,
 				FD0636781687D4440003F00E /* PFConnectViewController.m in Sources */,
 				FD06367B1687D46E0003F00E /* PFConnectView.m in Sources */,
+				FDA4C897168B09CF00B493E1 /* PFNetworkManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

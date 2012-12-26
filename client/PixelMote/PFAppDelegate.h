@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class PFConnectViewController;
+
 @interface PFAppDelegate : UIResponder <UIApplicationDelegate>
+{
+    PFConnectViewController *connectViewController;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

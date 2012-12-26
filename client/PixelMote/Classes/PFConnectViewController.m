@@ -11,6 +11,7 @@
 #import "ELCTextfieldCell.h"
 #import "PFGamepadViewController.h"
 #import "UIDevice+IdentifierAddition.h"
+#import "PFNetworkManager.h"
 
 @interface PFConnectViewController ()
 
@@ -34,7 +35,7 @@
         labels = [NSArray arrayWithObjects:@"Host", @"Port", @"Alias", nil];
         
         images = [NSArray arrayWithObjects:@"host",@"port",@"alias", nil];
-        defaults = @[@"", @"12345", @"nobody"];
+        defaults = @[@"192.168.0.", @"12345", @"scrottobaggins"];
     }
     
     return self;
@@ -81,7 +82,7 @@
     //	cell.leftImage = [self.labels objectAtIndex:indexPath.row];
     
 	cell.rightTextField.placeholder = [labels objectAtIndex:indexPath.row];
-  cell.rightTextField.text = [defaults objectAtIndex:indexPath.row];
+    cell.rightTextField.text = [defaults objectAtIndex:indexPath.row];
     cell.leftImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@icon.png", [images objectAtIndex:indexPath.row]]]];
     
 	cell.indexPath = indexPath;
@@ -110,9 +111,32 @@
 	}
 }
 
-- (void)makeConnectionWithHost:(NSString *)host port:(NSString *)port alias:(NSString *)alias
-{    
-    PFGamepadViewController *gamepad = [[PFGamepadViewController alloc] initWithHost:host port:[port intValue] alias:alias];
-    [[self navigationController] pushViewController:gamepad animated:YES];
+- (void)makeConnectionWithHost:(NSString *)host port:(NSInteger)port alias:(NSString *)a
+{
+    alias = [a copy];
+    
+    [[PFNetworkManager sharedInstance] initNetworkConnectionWithHost:host port:port block:^(BOOL success) {
+        
+        if (success) {
+            [self sendConnectionMessage];
+            
+            PFGamepadViewController *gamepad = [[PFGamepadViewController alloc] initWithAlias:alias];
+            [[self navigationController] pushViewController:gamepad animated:YES];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:@"An error occured. Please check the host and port" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [alertView show];
+        }
+    }];
+}
+
+- (void)sendConnectionMessage
+{
+    if (alias) {
+        NSString *message  = [NSString stringWithFormat:@"%@", alias];
+        NSMutableData *data = [[NSMutableData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
+        unsigned char nullTerminator[1] = {0};
+        [data appendBytes:nullTerminator length:1];
+        [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"h" data:data];
+    }
 }
 @end

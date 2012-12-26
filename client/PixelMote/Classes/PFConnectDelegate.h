@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @protocol PFConnectDelegate <NSObject>
-- (void)makeConnectionWithHost:(NSString *)host port:(NSString *)port alias:(NSString *)alias;
+- (void)makeConnectionWithHost:(NSString *)host port:(NSInteger)port alias:(NSString *)alias;
 @end

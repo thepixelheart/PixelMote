@@ -3,6 +3,7 @@ from twisted.internet import reactor
 
 class PixelMote(Protocol):
   def connectionMade(self):
+    print "connection from ", self.transport.getPeer()
     self.factory.clients.append(self)
     print "clients are ", self.factory.clients
 

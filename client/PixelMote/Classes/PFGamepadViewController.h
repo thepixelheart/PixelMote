@@ -10,15 +10,11 @@
 #import "PFGamepadDelegate.h"
 #import "PFJoystickDelegate.h"
 
-@interface PFGamepadViewController : UIViewController <PFGamepadDelegate, PFJoystickDelegate, NSStreamDelegate>
+@interface PFGamepadViewController : UIViewController <PFGamepadDelegate, PFJoystickDelegate>
 {
-    NSInputStream *inputStream;
-    NSOutputStream *outputStream;
-    NSString *host;
-    NSInteger port;
     NSString *alias;
 }
 
-- (id)initWithHost:(NSString*)h port:(NSInteger)p alias:(NSString*)a;
+- (id)initWithAlias:(NSString*)a;
 
 @end

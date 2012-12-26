@@ -9,7 +9,7 @@
 #import "PFAppDelegate.h"
 #import "PFConnectViewController.h"
 #import "UIDevice+IdentifierAddition.h"
-
+#import "PFNetworkManager.h"
 @implementation PFAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -17,7 +17,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    PFConnectViewController *connectViewController = [[PFConnectViewController alloc] init];
+    connectViewController = [[PFConnectViewController alloc] init];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:connectViewController];
     navigationController.navigationBarHidden = YES;
@@ -37,13 +37,12 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[PFNetworkManager sharedInstance] closeNetworkConnection];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [[PFNetworkManager sharedInstance] initNetworkConnectionWithPreviousHostAndPort];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -53,6 +52,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[PFNetworkManager sharedInstance] closeNetworkConnection];
 }
 @end

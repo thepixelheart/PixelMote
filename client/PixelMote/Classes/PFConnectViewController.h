@@ -17,5 +17,8 @@
     NSArray *images;
     NSArray *labels;
     NSArray *defaults;
+    NSString *alias;
 }
+
+- (void)sendConnectionMessage;
 @end

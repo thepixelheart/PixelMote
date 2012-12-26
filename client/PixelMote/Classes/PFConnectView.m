@@ -54,9 +54,9 @@
 
 - (void)animateLogo
 {
-    [UIView animateWithDuration:0.5 delay:0.15 options:UIViewAnimationCurveEaseIn animations:^{
+    [UIView animateWithDuration:0.75 delay:0.15 options:UIViewAnimationCurveEaseIn animations:^{
         CGRect logoFrame = logoImageView.frame;
-        logoFrame.origin.y = 90.0;
+        logoFrame.origin.y = 35.0;
         logoImageView.frame = logoFrame;
     } completion:^(BOOL finished) {
         [self layoutInputFields];
@@ -116,7 +116,7 @@
     NSString *alias = [aliasCell rightTextField].text;
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(makeConnectionWithHost:port:alias:)]) {
-        [self.delegate makeConnectionWithHost:host port:port alias:alias];
+        [self.delegate makeConnectionWithHost:host port:[port intValue] alias:alias];
     }
 }
 

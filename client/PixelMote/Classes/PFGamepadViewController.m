@@ -8,20 +8,18 @@
 
 #import "PFGamepadViewController.h"
 #import "PFGamepadView.h"
-
+#import "PFNetworkManager.h"
 @interface PFGamepadViewController ()
 
 @end
 
 @implementation PFGamepadViewController
 
-- (id)initWithHost:(NSString *)h port:(NSInteger)p alias:(NSString *)a;
+- (id)initWithAlias:(NSString *)a;
 {
     self = [super init];
     
     if(self) {
-        host = [h copy];
-        port = p;
         alias = [a copy];
     }
     
@@ -43,14 +41,6 @@
     gamepadView.joystickDelegate = self;
     gamepadView.statusLabel.text = [NSString stringWithFormat:@"Hello, %@!", alias];
     [[self view] addSubview:gamepadView];
-    
-    [self initNetworkCommunication];
-    
-    NSString *message  = [NSString stringWithFormat:@"%@", alias];
-    NSMutableData *data = [[NSMutableData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
-    unsigned char nullTerminator[1] = {0};
-    [data appendBytes:nullTerminator length:1];
-    [self sendDataWithMessageType:@"h" data:data];
 }
 
 - (void)didMoveWithAngle:(CGFloat)angle velocity:(CGFloat)velocity
@@ -59,48 +49,25 @@
     NSData *velocityData = [NSData dataWithBytes:&velocity length:sizeof(velocity)];
     NSMutableData *moveData = [[NSMutableData alloc] initWithData:angleData];
     [moveData appendData:velocityData];
-    [self sendDataWithMessageType:@"m" data:moveData];
+    [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"m" data:moveData];
 }
 
 - (void)didEndMove
 {
-    [self sendDataWithMessageType:@"e" data:nil];
+    [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"e" data:nil];
 }
 
 - (void)didPressButton:(GamepadButton)button
 {
     NSString *buttonType = button == 0 ? @"a" : @"b";
     NSData *data = [[NSData alloc] initWithData:[buttonType dataUsingEncoding:NSASCIIStringEncoding]];
-    [self sendDataWithMessageType:@"b" data:data];
+    [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"b" data:data];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)initNetworkCommunication {
-    CFReadStreamRef readStream;
-    CFWriteStreamRef writeStream;
-    CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)host,port, &readStream, &writeStream);
-    inputStream = (__bridge NSInputStream *)readStream;
-    outputStream = (__bridge NSOutputStream *)writeStream;
-    [inputStream setDelegate:self];
-    [outputStream setDelegate:self];
-    
-    [inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-    [outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-    
-    [inputStream open];
-    [outputStream open];
-}
-
-- (void)sendDataWithMessageType:(NSString *)type data:(NSData *)data
-{
-    NSMutableData *message = [[NSMutableData alloc] initWithData:[type dataUsingEncoding:NSASCIIStringEncoding]];
-    [message appendData:data];
-    [outputStream write:[message bytes] maxLength:[message length]];
 }
 
 @end
