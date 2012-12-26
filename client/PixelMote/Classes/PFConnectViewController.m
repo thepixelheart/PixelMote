@@ -110,8 +110,7 @@
 
 - (void)makeConnectionWithHost:(NSString *)host port:(NSString *)port alias:(NSString *)alias
 {    
-    NSString *uniqueId = [[UIDevice currentDevice] uniqueGlobalDeviceIdentifier];
-    PFGamepadViewController *gamepad = [[PFGamepadViewController alloc] initWithUniqueId:uniqueId host:host port:[port intValue] alias:alias];
+    PFGamepadViewController *gamepad = [[PFGamepadViewController alloc] initWithHost:host port:[port intValue] alias:alias];
     [[self navigationController] pushViewController:gamepad animated:YES];
 }
 @end

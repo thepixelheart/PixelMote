@@ -14,12 +14,11 @@
 {
     NSInputStream *inputStream;
     NSOutputStream *outputStream;
-    NSString *uniqueId;
     NSString *host;
     NSInteger port;
     NSString *alias;
 }
 
-- (id)initWithUniqueId:(NSString *)uid host:(NSString*)h port:(NSInteger)p alias:(NSString*)a;
+- (id)initWithHost:(NSString*)h port:(NSInteger)p alias:(NSString*)a;
 
 @end

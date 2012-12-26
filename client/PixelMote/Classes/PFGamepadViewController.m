@@ -15,12 +15,11 @@
 
 @implementation PFGamepadViewController
 
-- (id)initWithUniqueId:(NSString *)uid host:(NSString *)h port:(NSInteger)p alias:(NSString *)a;
+- (id)initWithHost:(NSString *)h port:(NSInteger)p alias:(NSString *)a;
 {
     self = [super init];
     
     if(self) {
-        uniqueId = [uid copy];
         host = [h copy];
         port = p;
         alias = [a copy];
@@ -47,22 +46,30 @@
     
     [self initNetworkCommunication];
     
-    [self sendDataWithPrefix:@"hi" content:[NSString stringWithFormat:@"%@,%@", uniqueId, alias]];
+    NSString *message  = [NSString stringWithFormat:@"%@", alias];
+    NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
+    [self sendDataWithMessageType:@"h" data:data];
 }
 
 - (void)didMoveWithAngle:(CGFloat)angle velocity:(CGFloat)velocity
 {
-    [self sendDataWithPrefix:@"mv" content:[NSString stringWithFormat:@"%f,%f",angle,velocity]];
+    NSData *angleData = [NSData dataWithBytes:&angle length:sizeof(angle)];
+    NSData *velocityData = [NSData dataWithBytes:&velocity length:sizeof(velocity)];
+    NSMutableData *moveData = [[NSMutableData alloc] initWithData:angleData];
+    [moveData appendData:velocityData];
+    [self sendDataWithMessageType:@"m" data:moveData];
 }
 
 - (void)didEndMove
 {
-    [self sendDataWithPrefix:@"emv" content:@""];
+    [self sendDataWithMessageType:@"e" data:nil];
 }
 
 - (void)didPressButton:(GamepadButton)button
 {
-    [self sendDataWithPrefix:@"bp" content:[NSString stringWithFormat:@"%d",button]];
+    short buttonType = button;
+    NSData *data = [NSData dataWithBytes:&buttonType length:sizeof(buttonType)];
+    [self sendDataWithMessageType:@"b" data:data];
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,11 +94,13 @@
     [outputStream open];
 }
 
--(void)sendDataWithPrefix:(NSString *)prefix content:(NSString *)content
+- (void)sendDataWithMessageType:(NSString *)type data:(NSData *)data
 {
-    NSString *response  = [NSString stringWithFormat:@"%@:%@:%@", prefix, content, uniqueId];
-	NSData *data = [[NSData alloc] initWithData:[response dataUsingEncoding:NSASCIIStringEncoding]];
-	[outputStream write:[data bytes] maxLength:[data length]];
+    NSMutableData *message = [[NSMutableData alloc] initWithData:[type dataUsingEncoding:NSASCIIStringEncoding]];
+    [message appendData:data];
+    NSData *cr = [@"\n" dataUsingEncoding:NSASCIIStringEncoding];
+    [message appendData:cr];
+    [outputStream write:[message bytes] maxLength:[message length]];
 }
 
 @end
