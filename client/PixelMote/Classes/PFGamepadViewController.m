@@ -42,6 +42,7 @@
     gamepadView.frame = mainFrame;
     gamepadView.delegate = self;
     gamepadView.joystickDelegate = self;
+    gamepadView.statusLabel.text = [NSString stringWithFormat:@"Hello, %@!", alias];
     [[self view] addSubview:gamepadView];
     
     [self initNetworkCommunication];

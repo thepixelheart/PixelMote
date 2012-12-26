@@ -89,7 +89,7 @@
     CGRect tableViewFrame = tableView.frame;
     CGFloat tableViewWidth = 235.0;
     tableViewFrame.size.width = tableViewWidth;
-    tableViewFrame.size.height = 160.0;
+    tableViewFrame.size.height = 175.0;
     tableViewFrame.origin.x = frame.size.width / 2.0 - tableViewWidth / 2.0;
     tableViewFrame.origin.y = logoY + logoHeight + 15.0;
     tableView.frame = tableViewFrame;
