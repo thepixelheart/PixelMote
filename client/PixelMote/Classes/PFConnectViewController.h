@@ -16,5 +16,6 @@
     PFConnectView *connectView;
     NSArray *images;
     NSArray *labels;
+    NSArray *defaults;
 }
 @end
