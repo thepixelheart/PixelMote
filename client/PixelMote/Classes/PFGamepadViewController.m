@@ -67,8 +67,8 @@
 
 - (void)didPressButton:(GamepadButton)button
 {
-    short buttonType = button;
-    NSData *data = [NSData dataWithBytes:&buttonType length:sizeof(buttonType)];
+    NSString *buttonType = button == 0 ? @"a" : @"b";
+    NSData *data = [[NSData alloc] initWithData:[buttonType dataUsingEncoding:NSASCIIStringEncoding]];
     [self sendDataWithMessageType:@"b" data:data];
 }
 
