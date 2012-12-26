@@ -89,7 +89,7 @@
 
 -(void)sendDataWithPrefix:(NSString *)prefix content:(NSString *)content
 {
-    NSString *response  = [NSString stringWithFormat:@"%@:%@:%@", prefix, content, uniqueId];
+    NSString *response  = [NSString stringWithFormat:@"%@:%@:%@\n", prefix, content, uniqueId];
 	NSData *data = [[NSData alloc] initWithData:[response dataUsingEncoding:NSASCIIStringEncoding]];
 	[outputStream write:[data bytes] maxLength:[data length]];
 }
