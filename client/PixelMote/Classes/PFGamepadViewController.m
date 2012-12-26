@@ -98,8 +98,6 @@
 {
     NSMutableData *message = [[NSMutableData alloc] initWithData:[type dataUsingEncoding:NSASCIIStringEncoding]];
     [message appendData:data];
-    NSData *cr = [@"\n" dataUsingEncoding:NSASCIIStringEncoding];
-    [message appendData:cr];
     [outputStream write:[message bytes] maxLength:[message length]];
 }
 
