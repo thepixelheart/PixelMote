@@ -47,7 +47,9 @@
     [self initNetworkCommunication];
     
     NSString *message  = [NSString stringWithFormat:@"%@", alias];
-    NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
+    NSMutableData *data = [[NSMutableData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
+    unsigned char nullTerminator[1] = {0};
+    [data appendBytes:nullTerminator length:1];
     [self sendDataWithMessageType:@"h" data:data];
 }
 
