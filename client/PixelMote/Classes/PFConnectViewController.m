@@ -158,4 +158,9 @@
         [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"h" data:data];
     }
 }
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [connectView doneEditing];
+}
 @end

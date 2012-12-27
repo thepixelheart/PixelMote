@@ -120,4 +120,13 @@
     }
 }
 
+- (void)doneEditing
+{
+    NSArray *cells = [tableView visibleCells];
+    
+    for (ELCTextfieldCell *cell in cells) {
+        [[cell rightTextField] resignFirstResponder];
+    }
+}
+
 @end

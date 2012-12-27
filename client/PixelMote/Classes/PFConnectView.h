@@ -15,6 +15,8 @@
     UIImageView *logoImageView;
 }
 
+- (void)doneEditing;
+
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) id<PFConnectDelegate>delegate;
 
