@@ -57,12 +57,23 @@
     [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"e" data:nil];
 }
 
+- (void)didReleaseButton:(GamepadButton)button
+{
+    [self sendButtonDataWithMessageType:@"r" buttonType:button];
+}
+
 - (void)didPressButton:(GamepadButton)button
+{
+    [self sendButtonDataWithMessageType:@"p" buttonType:button];
+}
+
+- (void)sendButtonDataWithMessageType:(NSString *)messageType buttonType:(GamepadButton)button
 {
     NSString *buttonType = button == 0 ? @"a" : @"b";
     NSData *data = [[NSData alloc] initWithData:[buttonType dataUsingEncoding:NSASCIIStringEncoding]];
-    [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"b" data:data];
+    [[PFNetworkManager sharedInstance] sendDataWithMessageType:messageType data:data];
 }
+
 
 - (void)didReceiveMemoryWarning
 {

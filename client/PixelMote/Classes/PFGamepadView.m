@@ -84,7 +84,8 @@
     [button setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     button.frame = frame;
     button.tag = tag;
-    [button addTarget:self action:@selector(didPressButton:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(didTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(didTouchDown:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:button];
 }
 
@@ -97,7 +98,14 @@
     AudioServicesPlaySystemSound(sounds[0]);
 }
 
-- (void)didPressButton:(id)sender
+- (void)didTouchUpInside:(id)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didReleaseButton:)]) {
+        [self.delegate didReleaseButton:[sender tag]];
+    }
+}
+
+- (void)didTouchDown:(id)sender
 {
     [self playButtonSound];
     if (self.delegate && [self.delegate respondsToSelector:@selector(didPressButton:)]) {
