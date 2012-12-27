@@ -40,6 +40,8 @@
 		FD53E42C167855C000B16B80 /* 90x90-joystiq-button.png in Resources */ = {isa = PBXBuildFile; fileRef = FD53E42B167855C000B16B80 /* 90x90-joystiq-button.png */; };
 		FD53E42E167855C400B16B80 /* 205x205-joystiq-border.png in Resources */ = {isa = PBXBuildFile; fileRef = FD53E42D167855C400B16B80 /* 205x205-joystiq-border.png */; };
 		FDA4C897168B09CF00B493E1 /* PFNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA4C896168B09CF00B493E1 /* PFNetworkManager.m */; };
+		FDA4C89A168BC65B00B493E1 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FDA4C898168BC65B00B493E1 /* icon.png */; };
+		FDA4C89B168BC65B00B493E1 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDA4C899168BC65B00B493E1 /* icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +94,8 @@
 		FD53E42D167855C400B16B80 /* 205x205-joystiq-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "205x205-joystiq-border.png"; path = "PixelMote/Resources/205x205-joystiq-border.png"; sourceTree = "<group>"; };
 		FDA4C895168B09CF00B493E1 /* PFNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PFNetworkManager.h; path = PixelMote/Classes/PFNetworkManager.h; sourceTree = "<group>"; };
 		FDA4C896168B09CF00B493E1 /* PFNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFNetworkManager.m; path = PixelMote/Classes/PFNetworkManager.m; sourceTree = "<group>"; };
+		FDA4C898168BC65B00B493E1 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = PixelMote/Resources/icon.png; sourceTree = "<group>"; };
+		FDA4C899168BC65B00B493E1 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "PixelMote/Resources/icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +223,8 @@
 		FD53E3D71675F91C00B16B80 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FDA4C898168BC65B00B493E1 /* icon.png */,
+				FDA4C899168BC65B00B493E1 /* icon@2x.png */,
 				FD06368A168908220003F00E /* aliasicon@2x.png */,
 				FD06368616883E0E0003F00E /* hosticon@2x.png */,
 				FD06368716883E0E0003F00E /* porticon@2x.png */,
@@ -314,6 +320,8 @@
 				FD06368816883E0E0003F00E /* hosticon@2x.png in Resources */,
 				FD06368916883E0E0003F00E /* porticon@2x.png in Resources */,
 				FD06368B168908220003F00E /* aliasicon@2x.png in Resources */,
+				FDA4C89A168BC65B00B493E1 /* icon.png in Resources */,
+				FDA4C89B168BC65B00B493E1 /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

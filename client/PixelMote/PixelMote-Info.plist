@@ -26,6 +26,11 @@
 	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>icon@2x.png</string>
+		<string>icon.png</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -34,5 +39,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 </dict>
 </plist>
