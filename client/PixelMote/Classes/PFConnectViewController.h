@@ -10,9 +10,11 @@
 #import "PFConnectDelegate.h"
 
 @class PFConnectView;
+@class PFGamepadViewController;
 
 @interface PFConnectViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PFConnectDelegate>
 {
+    PFGamepadViewController *gamepad;
     PFConnectView *connectView;
     NSArray *images;
     NSArray *labels;

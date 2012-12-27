@@ -139,8 +139,10 @@
         if (success) {
             [self sendConnectionMessage];
             
-            PFGamepadViewController *gamepad = [[PFGamepadViewController alloc] initWithAlias:alias];
-            [[self navigationController] pushViewController:gamepad animated:YES];
+            if (gamepad == nil) {
+                gamepad = [[PFGamepadViewController alloc] initWithAlias:alias];
+                [[self navigationController] pushViewController:gamepad animated:YES];
+            }
         } else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:@"An error occured. Please check the host and port" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [alertView show];
