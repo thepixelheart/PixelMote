@@ -35,7 +35,15 @@
         labels = [NSArray arrayWithObjects:@"Host", @"Port", @"Alias", nil];
         
         images = [NSArray arrayWithObjects:@"host",@"port",@"alias", nil];
-        defaults = @[@"192.168.0.", @"12345", @"scrottobaggins"];
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSArray *credentials = [userDefaults objectForKey:@"credentials"];
+        
+        if (credentials) {
+            defaults = [credentials copy];
+        } else {
+            defaults = @[@"192.168.0.", @"12345", @"scrottobaggins"];
+        }
     }
     
     return self;
@@ -114,6 +122,11 @@
 - (void)makeConnectionWithHost:(NSString *)host port:(NSInteger)port alias:(NSString *)a
 {
     alias = [a copy];
+    
+    NSArray *credentials = @[host, [NSString stringWithFormat:@"%d", port], alias];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:credentials forKey:@"credentials"];
+    [userDefaults synchronize];
     
     [[PFNetworkManager sharedInstance] initNetworkConnectionWithHost:host port:port block:^(BOOL success) {
         
