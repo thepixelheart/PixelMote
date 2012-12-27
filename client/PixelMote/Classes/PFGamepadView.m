@@ -84,7 +84,7 @@
     [button setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     button.frame = frame;
     button.tag = tag;
-    [button addTarget:self action:@selector(didTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(didTouchUpInside:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
     [button addTarget:self action:@selector(didTouchDown:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:button];
 }
