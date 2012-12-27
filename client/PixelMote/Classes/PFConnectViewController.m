@@ -153,7 +153,8 @@
 - (void)sendConnectionMessage
 {
     if (alias) {
-        NSString *message  = [NSString stringWithFormat:@"%@", alias];
+        NSString *deviceId = [[UIDevice currentDevice] uniqueDeviceIdentifier];
+        NSString *message  = [NSString stringWithFormat:@"%@,%@", deviceId,alias];
         NSMutableData *data = [[NSMutableData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
         unsigned char nullTerminator[1] = {0};
         [data appendBytes:nullTerminator length:1];
