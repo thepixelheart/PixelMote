@@ -36,14 +36,7 @@
         
         images = [NSArray arrayWithObjects:@"host",@"port",@"alias", nil];
         
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSArray *credentials = [userDefaults objectForKey:@"credentials"];
-        
-        if (credentials) {
-            defaults = [credentials copy];
-        } else {
-            defaults = @[@"192.168.0.", @"12345", @"scrottobaggins"];
-        }
+        [self autoFillCredentials];
     }
     
     return self;
@@ -59,6 +52,19 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)autoFillCredentials
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSArray *credentials = [userDefaults objectForKey:@"credentials"];
+    
+    if (credentials) {
+        defaults = [credentials copy];
+    } else {
+        defaults = @[@"192.168.0.", @"12345", @"scrottobaggins"];
+    }
+
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
