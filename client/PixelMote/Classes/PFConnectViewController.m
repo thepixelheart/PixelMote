@@ -17,9 +17,10 @@
 
 @end
 
-@implementation PFConnectViewController {
-  NSNetServiceBrowser* _browser;
-  NSNetService* _service;
+@implementation PFConnectViewController
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (id)init
@@ -27,6 +28,7 @@
     self = [super init];
     
     if (self) {
+      [PFNetworkManager sharedInstance];
         CGRect frame = [UIScreen mainScreen].bounds;
         
         connectView = [[PFConnectView alloc] initWithFrame:frame];
@@ -40,11 +42,9 @@
         images = [NSArray arrayWithObjects:@"host",@"port",@"alias", nil];
         
         [self autoFillCredentials];
-      
-      _browser = [[NSNetServiceBrowser alloc] init];
-      _browser.delegate = self;
-      [_browser scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-      [_browser searchForServicesOfType:@"_pixelmote._tcp." inDomain:@""];
+
+      NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+      [nc addObserver:self selector:@selector(didFindBonjourNotification:) name:PHNetworkManagerDidFindServerNotification object:nil];
     }
     
     return self;
@@ -147,10 +147,8 @@
         if (success) {
             [self sendConnectionMessage];
             
-            if (gamepad == nil) {
-                gamepad = [[PFGamepadViewController alloc] initWithAlias:alias];
-                [[self navigationController] pushViewController:gamepad animated:YES];
-            }
+          PFGamepadViewController* gamepad = [[PFGamepadViewController alloc] initWithAlias:alias];
+          [[self navigationController] pushViewController:gamepad animated:YES];
         } else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:@"An error occured. Please check the host and port" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [alertView show];
@@ -175,32 +173,15 @@
     [connectView doneEditing];
 }
 
-#pragma mark - NSNetServiceBrowserDelegate
+#pragma mark - NSNotification
 
-- (void)netServiceBrowserWillSearch:(NSNetServiceBrowser *)aNetServiceBrowser {
-  NSLog(@"Searching...");
-}
+- (void)didFindBonjourNotification:(NSNotification *)notification {
 
-- (void)netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)aNetServiceBrowser {
-  NSLog(@"Stopped searching.");
-}
-
-- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindDomain:(NSString *)domainString moreComing:(BOOL)moreComing {
-  NSLog(@"Found domain! %@", domainString);
-}
-
--(void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
-  NSLog(@"Found service");
-  _service = aNetService;
-  _service.delegate = self;
-  [_service resolveWithTimeout:15.0];
-}
-
-#pragma mark - NSNetServiceDelegate
-
--(void)netServiceDidResolveAddress:(NSNetService *)sender {
-  NSLog(@"%@", [NSString stringWithFormat:@"%@:%d/", [sender hostName], [sender port]]);
-  _service = nil;
+  NSArray *credentials = @[[[PFNetworkManager sharedInstance] host], [NSString stringWithFormat:@"%d", [(PFNetworkManager *)[PFNetworkManager sharedInstance] port]], connectView.alias];
+  NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+  [userDefaults setObject:credentials forKey:@"credentials"];
+  defaults = credentials;
+  [connectView.tableView reloadData];
 }
 
 @end

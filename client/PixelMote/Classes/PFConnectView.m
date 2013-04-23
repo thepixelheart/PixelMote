@@ -129,4 +129,9 @@
     }
 }
 
+- (NSString *)alias {
+  ELCTextfieldCell *aliasCell = (ELCTextfieldCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+  return [aliasCell rightTextField].text;
+}
+
 @end

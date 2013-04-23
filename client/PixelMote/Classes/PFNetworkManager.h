@@ -10,12 +10,13 @@
 
 typedef void (^StreamBlock)(BOOL);
 
+extern NSString* const PHNetworkManagerDidFindServerNotification;
+extern NSString* const PHNetworkManagerDidRemoveServerNotification;
+
 @interface PFNetworkManager : NSObject <NSStreamDelegate>
 {
     NSInputStream *inputStream;
     NSOutputStream *outputStream;
-    NSString *host;
-    NSInteger port;
     StreamBlock streamBlock;
     BOOL initalizingConnection;
 }
@@ -24,4 +25,7 @@ typedef void (^StreamBlock)(BOOL);
 - (void)initNetworkConnectionWithPreviousHostAndPort;
 - (void)initNetworkConnectionWithHost:(NSString *)host port:(NSInteger)port block:(void(^)(BOOL success))block;
 - (void)closeNetworkConnection;
+- (void)setStreamBlock:(void(^)(BOOL success))block;
+@property (nonatomic, copy) NSString* host;
+@property (nonatomic, assign) NSInteger port;
 @end

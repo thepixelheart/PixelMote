@@ -15,12 +15,20 @@
 
 @implementation PFGamepadViewController
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+}
+
 - (id)initWithAlias:(NSString *)a;
 {
     self = [super init];
     
     if(self) {
         alias = [a copy];
+
+      NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+      [nc addObserver:self selector:@selector(didRemoveServer) name:PHNetworkManagerDidRemoveServerNotification object:nil];
     }
     
     return self;
@@ -79,6 +87,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)didRemoveServer {
+  [[PFNetworkManager sharedInstance] closeNetworkConnection];
+  [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

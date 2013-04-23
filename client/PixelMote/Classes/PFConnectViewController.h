@@ -14,7 +14,6 @@
 
 @interface PFConnectViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PFConnectDelegate>
 {
-    PFGamepadViewController *gamepad;
     PFConnectView *connectView;
     NSArray *images;
     NSArray *labels;

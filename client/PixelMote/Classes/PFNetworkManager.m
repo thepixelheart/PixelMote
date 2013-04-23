@@ -8,13 +8,23 @@
 
 #import "PFNetworkManager.h"
 
-@implementation PFNetworkManager
+NSString* const PHNetworkManagerDidFindServerNotification = @"PHNetworkManagerDidFindServerNotification";
+NSString* const PHNetworkManagerDidRemoveServerNotification = @"PHNetworkManagerDidRemoveServerNotification";
+
+@interface PFNetworkManager() <NSNetServiceBrowserDelegate, NSNetServiceDelegate>
+@end
+
+@implementation PFNetworkManager {
+  NSNetServiceBrowser* _browser;
+  NSNetService* _service;
+}
+
 static PFNetworkManager *sharedInstance = nil;
 
 // Get the shared instance and create it if necessary.
 + (PFNetworkManager *)sharedInstance {
     if (sharedInstance == nil) {
-        sharedInstance = [[super allocWithZone:NULL] init];
+        sharedInstance = [[self allocWithZone:NULL] init];
     }
     
     return sharedInstance;
@@ -25,9 +35,15 @@ static PFNetworkManager *sharedInstance = nil;
     self = [super init];
     
     if (self) {
-        host = nil;
-        port = 0;
+        self.host = nil;
+        self.port = 0;
         initalizingConnection = NO;
+
+
+      _browser = [[NSNetServiceBrowser alloc] init];
+      _browser.delegate = self;
+      [_browser scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+      [_browser searchForServicesOfType:@"_pixelmote._tcp." inDomain:@""];
     }
     
     return self;
@@ -39,8 +55,8 @@ static PFNetworkManager *sharedInstance = nil;
 
 - (void)initNetworkConnectionWithPreviousHostAndPort
 {
-    if (host && port > 0) {
-        [self initNetworkConnectionWithHost:host port:port block:streamBlock];
+    if (self.host && self.port > 0) {
+        [self initNetworkConnectionWithHost:self.host port:self.port block:streamBlock];
     }
 }
 
@@ -48,11 +64,11 @@ static PFNetworkManager *sharedInstance = nil;
   [self closeNetworkConnection];
 
     initalizingConnection = YES;
-    streamBlock = block;
+    streamBlock = [block copy];
     
     if (!outputStream && !inputStream) {
-        host = [h copy];
-        port = p;
+        self.host = [h copy];
+        self.port = p;
         CFReadStreamRef readStream;
         CFWriteStreamRef writeStream;
         CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)h, p, &readStream, &writeStream);
@@ -66,6 +82,10 @@ static PFNetworkManager *sharedInstance = nil;
         
         [self openNetworkConnection];
     }
+}
+
+- (void)setStreamBlock:(void(^)(BOOL success))block {
+  streamBlock = [block copy];
 }
 
 - (void)sendDataWithMessageType:(NSString *)type data:(NSData *)data
@@ -107,14 +127,13 @@ static PFNetworkManager *sharedInstance = nil;
 {
     if ([outputStream streamStatus] == NSStreamStatusOpen &&
         [inputStream streamStatus] == NSStreamStatusOpen &&
-        streamEvent == NSStreamEventHasSpaceAvailable &&
+        streamEvent & NSStreamEventHasSpaceAvailable &&
         initalizingConnection) {
         initalizingConnection = NO;
         streamBlock(YES);
     }
     
     if (streamEvent & NSStreamEventErrorOccurred) {
-      NSLog(@"%@", [theStream streamError]);
         if (theStream == outputStream) {
             streamBlock(NO);
             outputStream = nil;
@@ -123,4 +142,28 @@ static PFNetworkManager *sharedInstance = nil;
         }
     }
 }
+
+#pragma mark - NSNetServiceBrowserDelegate
+
+-(void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
+  _service = aNetService;
+  _service.delegate = self;
+  [_service resolveWithTimeout:15.0];
+}
+
+- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didRemoveService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
+  NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+  [nc postNotificationName:PHNetworkManagerDidRemoveServerNotification object:nil];
+}
+
+#pragma mark - NSNetServiceDelegate
+
+-(void)netServiceDidResolveAddress:(NSNetService *)sender {
+  self.host = [sender hostName];
+  self.port = [sender port];
+
+  NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+  [nc postNotificationName:PHNetworkManagerDidFindServerNotification object:nil];
+}
+
 @end
