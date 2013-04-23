@@ -10,6 +10,14 @@
 
 NSString* const PHNetworkManagerDidFindServerNotification = @"PHNetworkManagerDidFindServerNotification";
 NSString* const PHNetworkManagerDidRemoveServerNotification = @"PHNetworkManagerDidRemoveServerNotification";
+NSString* const PHNetworkManagerDidLoadAnimationsServerNotification = @"PHNetworkManagerDidLoadAnimationsServerNotification";
+
+static NSInteger kMaxPacketSize = 1024 * 4;
+
+typedef enum {
+  PFReadStateNone,
+  PFReadStateListing,
+} PFReadState;
 
 @interface PFNetworkManager() <NSNetServiceBrowserDelegate, NSNetServiceDelegate>
 @end
@@ -17,6 +25,12 @@ NSString* const PHNetworkManagerDidRemoveServerNotification = @"PHNetworkManager
 @implementation PFNetworkManager {
   NSNetServiceBrowser* _browser;
   NSNetService* _service;
+
+  PFReadState _readState;
+  int32_t _additionalBytesLength;
+  NSMutableData* _mutableData;
+  int32_t _buffer;
+  NSInteger _offset;
 }
 
 static PFNetworkManager *sharedInstance = nil;
@@ -66,19 +80,19 @@ static PFNetworkManager *sharedInstance = nil;
     initalizingConnection = YES;
     streamBlock = [block copy];
     
-    if (!outputStream && !inputStream) {
+    if (!_outputStream && !_inputStream) {
         self.host = [h copy];
         self.port = p;
         CFReadStreamRef readStream;
         CFWriteStreamRef writeStream;
         CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)h, p, &readStream, &writeStream);
-        inputStream = (__bridge NSInputStream *)readStream;
-        outputStream = (__bridge NSOutputStream *)writeStream;
-        [inputStream setDelegate:self];
-        [outputStream setDelegate:self];
+        _inputStream = (__bridge NSInputStream *)readStream;
+        _outputStream = (__bridge NSOutputStream *)writeStream;
+        [_inputStream setDelegate:self];
+        [_outputStream setDelegate:self];
         
-        [inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        [outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        [_inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        [_outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         
         [self openNetworkConnection];
     }
@@ -92,55 +106,112 @@ static PFNetworkManager *sharedInstance = nil;
 {
     NSMutableData *message = [[NSMutableData alloc] initWithData:[type dataUsingEncoding:NSASCIIStringEncoding]];
     [message appendData:data];
-    [outputStream write:[message bytes] maxLength:[message length]];
+    [_outputStream write:[message bytes] maxLength:[message length]];
 }
 
 - (void)closeNetworkConnection
 {
-    if (inputStream && [inputStream streamStatus] == NSStreamStatusOpen) {
-        [inputStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        [inputStream close];
-        inputStream = nil;
+    if (_inputStream && [_inputStream streamStatus] == NSStreamStatusOpen) {
+        [_inputStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        [_inputStream close];
+        _inputStream = nil;
     }
     
-    if (outputStream && [outputStream streamStatus] == NSStreamStatusOpen) {
-        [outputStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        [outputStream close];
-        outputStream = nil;
+    if (_outputStream && [_outputStream streamStatus] == NSStreamStatusOpen) {
+        [_outputStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        [_outputStream close];
+        _outputStream = nil;
     }
 }
 
 - (void)openNetworkConnection
 {
-    if ([inputStream streamStatus] == NSStreamStatusNotOpen ||
-        [inputStream streamStatus] == NSStreamStatusClosed) {
-        [inputStream open];
+    if ([_inputStream streamStatus] == NSStreamStatusNotOpen ||
+        [_inputStream streamStatus] == NSStreamStatusClosed) {
+        [_inputStream open];
     }
     
-    if ([outputStream streamStatus] == NSStreamStatusNotOpen ||
-        [outputStream streamStatus] == NSStreamStatusClosed) {
-        [outputStream open];
+    if ([_outputStream streamStatus] == NSStreamStatusNotOpen ||
+        [_outputStream streamStatus] == NSStreamStatusClosed) {
+        [_outputStream open];
     }
 }
 
-- (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent
-{
-    if ([outputStream streamStatus] == NSStreamStatusOpen &&
-        [inputStream streamStatus] == NSStreamStatusOpen &&
-        streamEvent & NSStreamEventHasSpaceAvailable &&
-        initalizingConnection) {
+- (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent {
+  if (initalizingConnection) {
+    if ([_outputStream streamStatus] == NSStreamStatusOpen &&
+        [_inputStream streamStatus] == NSStreamStatusOpen &&
+        streamEvent & NSStreamEventHasSpaceAvailable) {
         initalizingConnection = NO;
         streamBlock(YES);
     }
-    
-    if (streamEvent & NSStreamEventErrorOccurred) {
-        if (theStream == outputStream) {
-            streamBlock(NO);
-            outputStream = nil;
-        } else if (theStream == inputStream) {
-            inputStream = nil;
-        }
+  } else if (streamEvent & NSStreamEventErrorOccurred) {
+    if (theStream == _outputStream) {
+      streamBlock(NO);
+      _outputStream = nil;
+    } else if (theStream == _inputStream) {
+      _inputStream = nil;
     }
+  } else if ([theStream isKindOfClass:[NSInputStream class]]) {
+    NSInputStream* inputStream = (NSInputStream *)theStream;
+
+    if (streamEvent & NSStreamEventHasBytesAvailable) {
+      uint8_t bytes[kMaxPacketSize];
+      memset(bytes, 0, sizeof(uint8_t) * kMaxPacketSize);
+      NSInteger nread = [inputStream read:bytes maxLength:kMaxPacketSize];
+
+      for (NSInteger ix = 0; ix < nread; ++ix) {
+        uint8_t byte = bytes[ix];
+        [self readByte:byte];
+      }
+    }
+  }
+}
+
+- (id)readByte:(uint8_t)byte {
+  if (_readState == PFReadStateNone) {
+    switch (byte) {
+      case 'l':
+        _readState = PFReadStateListing;
+        _offset = 0;
+        _additionalBytesLength = -1;
+        _buffer = 0;
+        break;
+
+      default:
+        break;
+    }
+  } else if (_readState == PFReadStateListing) {
+    if (_additionalBytesLength == -1) {
+      if (_offset < 4) {
+        ((uint8_t *)&_buffer)[_offset] = byte;
+        _offset++;
+        if (_offset == 4) {
+          _offset = 0;
+          _additionalBytesLength = _buffer;
+          _mutableData = [NSMutableData dataWithCapacity:_additionalBytesLength];
+        }
+      }
+    } else {
+      if (_offset < _additionalBytesLength) {
+        [_mutableData appendBytes:&byte length:sizeof(uint8_t)];
+        _offset++;
+
+        if (_offset == _additionalBytesLength) {
+          NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:_mutableData];
+          NSArray* animations = [[unarchiver decodeObject] copy];
+
+          _animations = [animations copy];
+
+          _mutableData = nil;
+          _readState = PFReadStateNone;
+
+          [[NSNotificationCenter defaultCenter] postNotificationName:PHNetworkManagerDidLoadAnimationsServerNotification object:nil];
+        }
+      }
+    }
+  }
+  return nil;
 }
 
 #pragma mark - NSNetServiceBrowserDelegate

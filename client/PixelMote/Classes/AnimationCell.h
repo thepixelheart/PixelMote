@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface AnimationCellObject : NSObject <NICollectionViewCellObject>
-@property (nonatomic, readwrite, copy) NSString* filename;
+@property (nonatomic, readwrite, copy) NSString* name;
+@property (nonatomic, readwrite, copy) UIImage* image;
 @end
 
 @interface AnimationCell : UICollectionViewCell <NICollectionViewCell>

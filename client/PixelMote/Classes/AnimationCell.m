@@ -8,6 +8,8 @@
 
 #import "AnimationCell.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation AnimationCellObject
 
 - (Class)collectionViewCellClass {
@@ -18,13 +20,18 @@
 
 @implementation AnimationCell {
   UILabel* _label;
+  UIImageView* _imageView;
 }
 
 - (id)initWithFrame:(CGRect)frame {
   if ((self = [super initWithFrame:frame])) {
+    _imageView = [[UIImageView alloc] init];
+    _imageView.layer.magnificationFilter = kCAFilterNearest;
+    [self.contentView addSubview:_imageView];
+  
     _label = [[UILabel alloc] init];
     _label.textColor = [UIColor whiteColor];
-    _label.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:32];
+    _label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
     _label.numberOfLines = 0;
     _label.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_label];
@@ -39,10 +46,13 @@
   _label.frame = self.contentView.bounds;
   CGSize size = [_label sizeThatFits:self.contentView.bounds.size];
   _label.frame = CGRectMake(0, self.contentView.bounds.size.height - size.height, size.width, size.height);
+
+  _imageView.frame = self.contentView.bounds;
 }
 
 - (BOOL)shouldUpdateCellWithObject:(AnimationCellObject *)object {
-  _label.text = object.filename;
+  _label.text = object.name;
+  _imageView.image = object.image;
   [self setNeedsLayout];
   return YES;
 }

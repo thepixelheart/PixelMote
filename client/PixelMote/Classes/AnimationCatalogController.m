@@ -9,27 +9,48 @@
 #import "AnimationCatalogController.h"
 
 #import "AnimationCell.h"
+#import "PFNetworkManager.h"
 
 static const UIEdgeInsets kSectionInsets = {10, 10, 10, 10};
 static const CGFloat kDistanceBetweenItems = 10;
 
 @implementation AnimationCatalogController
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (id)initWithLayout:(UICollectionViewFlowLayout *)layout {
   layout = [[UICollectionViewFlowLayout alloc] init];
   if ((self = [super initWithLayout:layout])) {
     self.title = @"Animations";
 
-    NSMutableArray* cellObjects = [NSMutableArray array];
-    AnimationCellObject* obj = [[AnimationCellObject alloc] init];
-    obj.filename = @"Test";
-    [cellObjects addObject:obj];
-    self.model = [[NICollectionViewModel alloc] initWithSectionedArray:cellObjects
-                                                              delegate:self];
     [self.actions attachToClass:[AnimationCellObject class]
              navigationSelector:@selector(didTapLevelObject:atIndexPath:)];
+
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(didDownloadAnimations) name:PHNetworkManagerDidLoadAnimationsServerNotification object:nil];
+
+    [self updateModel];
   }
   return self;
+}
+
+- (void)updateModel {
+  NSMutableArray* cellObjects = [NSMutableArray array];
+  NSArray* animations = [[PFNetworkManager sharedInstance] animations];
+  for (NSDictionary* animation in animations) {
+    AnimationCellObject* object = [[AnimationCellObject alloc] init];
+    object.name = animation[@"name"];
+    NSData* imageData = animation[@"image"];
+    UIImage* image = [UIImage imageWithData:imageData];
+    object.image = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:UIImageOrientationDownMirrored];
+    [cellObjects addObject:object];
+  }
+  self.model = [[NICollectionViewModel alloc] initWithSectionedArray:cellObjects
+                                                            delegate:self];
+  self.collectionView.dataSource = self.model;
+  [self.collectionView reloadData];
 }
 
 - (void)viewDidLoad {
@@ -44,6 +65,11 @@ static const CGFloat kDistanceBetweenItems = 10;
 
   [self.navigationController setNavigationBarHidden:NO animated:animated];
   [self updateLayoutWithInterfaceOrientation:NIInterfaceOrientation()];
+
+  // c for control
+  // l for list
+  NSData *data = [[NSData alloc] initWithData:[@"l" dataUsingEncoding:NSASCIIStringEncoding]];
+  [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"c" data:data];
 }
 
 - (void)updateLayoutWithInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -54,7 +80,7 @@ static const CGFloat kDistanceBetweenItems = 10;
   NSInteger numberOfColumns = UIInterfaceOrientationIsLandscape(interfaceOrientation) ? 3 : 2;
   totalColumnWidth -= MAX(numberOfColumns - 1, 0) * kDistanceBetweenItems;
   CGFloat colWidth = totalColumnWidth / numberOfColumns;
-  flow.itemSize = CGSizeMake(colWidth, colWidth);
+  flow.itemSize = CGSizeMake(colWidth, colWidth * 32 / 48);
   flow.sectionInset = kSectionInsets;
 }
 
@@ -67,6 +93,10 @@ static const CGFloat kDistanceBetweenItems = 10;
 #pragma mark - User Actions
 
 - (void)didTapLevelObject:(AnimationCellObject *)levelObject atIndexPath:(NSIndexPath *)indexPath {
+}
+
+- (void)didDownloadAnimations {
+  [self updateModel];
 }
 
 @end
