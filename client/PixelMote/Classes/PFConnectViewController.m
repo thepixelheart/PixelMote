@@ -13,11 +13,14 @@
 #import "UIDevice+IdentifierAddition.h"
 #import "PFNetworkManager.h"
 
-@interface PFConnectViewController ()
+@interface PFConnectViewController () <NSNetServiceBrowserDelegate, NSNetServiceDelegate>
 
 @end
 
-@implementation PFConnectViewController
+@implementation PFConnectViewController {
+  NSNetServiceBrowser* _browser;
+  NSNetService* _service;
+}
 
 - (id)init
 {
@@ -31,12 +34,17 @@
         connectView.tableView.dataSource = self;
         connectView.delegate = self;
         [[self view] addSubview:connectView];
-        
+
         labels = [NSArray arrayWithObjects:@"Host", @"Port", @"Alias", nil];
-        
+
         images = [NSArray arrayWithObjects:@"host",@"port",@"alias", nil];
         
         [self autoFillCredentials];
+      
+      _browser = [[NSNetServiceBrowser alloc] init];
+      _browser.delegate = self;
+      [_browser scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+      [_browser searchForServicesOfType:@"_pixelmote._tcp." inDomain:@""];
     }
     
     return self;
@@ -62,7 +70,7 @@
     if (credentials) {
         defaults = [credentials copy];
     } else {
-        defaults = @[@"192.168.0.", @"12345", @"scrottobaggins"];
+        defaults = @[@"192.168.0.", @"12345", @"pixelplayer"];
     }
 
 }
@@ -94,7 +102,7 @@
 - (void)configureCell:(ELCTextfieldCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
     //	cell.leftImage = [self.labels objectAtIndex:indexPath.row];
-    
+
 	cell.rightTextField.placeholder = [labels objectAtIndex:indexPath.row];
     cell.rightTextField.text = [defaults objectAtIndex:indexPath.row];
     cell.leftImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@icon.png", [images objectAtIndex:indexPath.row]]]];
@@ -166,4 +174,33 @@
 {
     [connectView doneEditing];
 }
+
+#pragma mark - NSNetServiceBrowserDelegate
+
+- (void)netServiceBrowserWillSearch:(NSNetServiceBrowser *)aNetServiceBrowser {
+  NSLog(@"Searching...");
+}
+
+- (void)netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)aNetServiceBrowser {
+  NSLog(@"Stopped searching.");
+}
+
+- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindDomain:(NSString *)domainString moreComing:(BOOL)moreComing {
+  NSLog(@"Found domain! %@", domainString);
+}
+
+-(void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
+  NSLog(@"Found service");
+  _service = aNetService;
+  _service.delegate = self;
+  [_service resolveWithTimeout:15.0];
+}
+
+#pragma mark - NSNetServiceDelegate
+
+-(void)netServiceDidResolveAddress:(NSNetService *)sender {
+  NSLog(@"%@", [NSString stringWithFormat:@"%@:%d/", [sender hostName], [sender port]]);
+  _service = nil;
+}
+
 @end

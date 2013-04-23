@@ -45,6 +45,8 @@ static PFNetworkManager *sharedInstance = nil;
 }
 
 - (void)initNetworkConnectionWithHost:(NSString *)h port:(NSInteger)p block:(void (^)(BOOL))block{
+  [self closeNetworkConnection];
+
     initalizingConnection = YES;
     streamBlock = block;
     
@@ -111,7 +113,8 @@ static PFNetworkManager *sharedInstance = nil;
         streamBlock(YES);
     }
     
-    if (streamEvent == NSStreamEventErrorOccurred) {
+    if (streamEvent & NSStreamEventErrorOccurred) {
+      NSLog(@"%@", [theStream streamError]);
         if (theStream == outputStream) {
             streamBlock(NO);
             outputStream = nil;
