@@ -15,4 +15,5 @@ typedef enum {
 @protocol PFGamepadDelegate <NSObject>
 - (void)didReleaseButton:(GamepadButton)button;
 - (void)didPressButton:(GamepadButton)button;
+- (void)didPressMenuButton:(UIButton *)button;
 @end

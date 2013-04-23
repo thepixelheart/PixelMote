@@ -12,6 +12,15 @@
 #import "PFJoystiqView.h"
 
 @implementation PFGamepadView
+{
+  UIButton *menuButton;
+  UIButton *aButton;
+  UIButton *bButton;
+  PFJoystiqView *joystick;
+  BOOL isMovingJoystick;
+  UIView *statusView;
+}
+
 @synthesize delegate, joystickDelegate, statusLabel;
 
 - (id)init
@@ -62,7 +71,14 @@
     CGFloat buttonMargin = 70.0f;
     
     CGRect frame = CGRectMake(aX, aY, buttonWidth, buttonHeight);
-    
+
+  menuButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  [menuButton setTitle:@"Menu" forState:UIControlStateNormal];
+  [menuButton addTarget:self action:@selector(didTapMenuButton:) forControlEvents:UIControlEventTouchUpInside];
+  [self addSubview:menuButton];
+  [menuButton sizeToFit];
+  menuButton.frame = CGRectMake(0, statusView.frame.size.height + 10, menuButton.frame.size.width, menuButton.frame.size.height);
+
     aButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self createAndAddButton:aButton frame:frame imageName:@"95x95-A-button.png" tag:AButton];
     
@@ -121,6 +137,10 @@
 - (id<PFJoystickDelegate>)joystickDelegate
 {
     return joystick.delegate;
+}
+
+- (void)didTapMenuButton:(UIButton *)button {
+  [delegate didPressMenuButton:button];
 }
 
 @end

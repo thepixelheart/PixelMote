@@ -9,6 +9,8 @@
 #import "PFGamepadViewController.h"
 #import "PFGamepadView.h"
 #import "PFNetworkManager.h"
+#import "AnimationCatalogController.h"
+
 @interface PFGamepadViewController ()
 
 @end
@@ -51,6 +53,12 @@
     [[self view] addSubview:gamepadView];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
 - (void)didMoveWithAngle:(CGFloat)angle velocity:(CGFloat)velocity
 {
     NSData *angleData = [NSData dataWithBytes:&angle length:sizeof(angle)];
@@ -73,6 +81,11 @@
 - (void)didPressButton:(GamepadButton)button
 {
     [self sendButtonDataWithMessageType:@"p" buttonType:button];
+}
+
+- (void)didPressMenuButton:(UIButton *)button {
+  AnimationCatalogController* animationController = [[AnimationCatalogController alloc] init];
+  [self.navigationController pushViewController:animationController animated:YES];
 }
 
 - (void)sendButtonDataWithMessageType:(NSString *)messageType buttonType:(GamepadButton)button

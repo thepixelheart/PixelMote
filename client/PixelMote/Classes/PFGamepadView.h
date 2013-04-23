@@ -12,14 +12,6 @@
 #import "PFJoystiqView.h"
 
 @interface PFGamepadView : UIView
-{
-    UIButton *aButton;
-    UIButton *bButton;
-    PFJoystiqView *joystick;
-    BOOL isMovingJoystick;
-    UIView *statusView;
-}
-
 @property (nonatomic, strong) UILabel *statusLabel;
 @property (nonatomic, strong) id<PFGamepadDelegate> delegate;
 @property (nonatomic, strong) id <PFJoystickDelegate> joystickDelegate;
