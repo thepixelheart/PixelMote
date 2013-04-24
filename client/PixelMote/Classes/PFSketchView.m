@@ -71,6 +71,10 @@ static const NSInteger kNumberOfRows = 32;
   for (UITouch* touch in touches) {
     CGPoint pixel = [_bg pixelAtPoint:[touch locationInView:_bg]];
     [self drawAtPixel:pixel];
+
+    uint16_t bits = (((uint8_t)pixel.x) << 8) | ((uint8_t)pixel.y);
+    NSData *data = [NSData dataWithBytes:&bits length:sizeof(bits)];
+    [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"x" data:data];
   }
 }
 
