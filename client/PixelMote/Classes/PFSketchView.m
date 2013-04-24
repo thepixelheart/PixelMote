@@ -11,7 +11,7 @@
 #import "PFNetworkManager.h"
 #import <QuartzCore/QuartzCore.h>
 
-static const UIEdgeInsets kPadding = {30, 10, 30, 10};
+static UIEdgeInsets kPadding = {0};
 static const NSInteger kNumberOfColumns = 48;
 static const NSInteger kNumberOfRows = 32;
 
@@ -25,6 +25,14 @@ static const NSInteger kNumberOfRows = 32;
 
 @implementation PFSketchView {
   PFSketchViewBackground* _bg;
+}
+
++ (void)initialize {
+  if (NIIsPad()) {
+    kPadding = UIEdgeInsetsMake(100, 10, 100, 10);
+  } else {
+    kPadding = UIEdgeInsetsMake(30, 10, 30, 10);
+  }
 }
 
 - (id)initWithFrame:(CGRect)frame {

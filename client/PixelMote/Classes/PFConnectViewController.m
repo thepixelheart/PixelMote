@@ -152,10 +152,18 @@
         } else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:@"An error occured. Please check the host and port" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [alertView show];
+          [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }];
 }
-
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+  return YES;
+}
+- (NSUInteger)supportedInterfaceOrientations
+{
+  return UIInterfaceOrientationMaskAll;
+}
 - (void)sendConnectionMessage
 {
     if (alias) {

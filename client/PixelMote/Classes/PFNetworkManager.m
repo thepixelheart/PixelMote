@@ -141,19 +141,19 @@ static PFNetworkManager *sharedInstance = nil;
 }
 
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent {
-  if (initalizingConnection) {
-    if ([_outputStream streamStatus] == NSStreamStatusOpen &&
-        [_inputStream streamStatus] == NSStreamStatusOpen &&
-        streamEvent & NSStreamEventHasSpaceAvailable) {
-        initalizingConnection = NO;
-        streamBlock(YES);
-    }
-  } else if (streamEvent & NSStreamEventErrorOccurred) {
+  if (streamEvent & NSStreamEventErrorOccurred) {
     if (theStream == _outputStream) {
       streamBlock(NO);
       _outputStream = nil;
     } else if (theStream == _inputStream) {
       _inputStream = nil;
+    }
+  } else if (initalizingConnection) {
+    if ([_outputStream streamStatus] == NSStreamStatusOpen &&
+        [_inputStream streamStatus] == NSStreamStatusOpen &&
+        streamEvent & NSStreamEventHasSpaceAvailable) {
+        initalizingConnection = NO;
+        streamBlock(YES);
     }
   } else if ([theStream isKindOfClass:[NSInputStream class]]) {
     NSInputStream* inputStream = (NSInputStream *)theStream;

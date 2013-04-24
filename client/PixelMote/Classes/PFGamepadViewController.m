@@ -73,15 +73,14 @@
     [moveData appendData:velocityData];
     [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"m" data:moveData];
 }
-
-- (BOOL)shouldAutorotate {
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
   return YES;
 }
-
-- (NSUInteger)supportedInterfaceOrientations {
-  return UIInterfaceOrientationMaskAllButUpsideDown;
+- (NSUInteger)supportedInterfaceOrientations
+{
+  return UIInterfaceOrientationMaskAll;
 }
-
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
   [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
