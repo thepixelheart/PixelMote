@@ -31,6 +31,7 @@ static const NSInteger kNumberOfRows = 32;
   if ((self = [super initWithFrame:frame])) {
     _bg = [[PFSketchViewBackground alloc] initWithFrame:self.bounds];
     _bg.autoresizingMask = UIViewAutoresizingFlexibleDimensions;
+    _bg.userInteractionEnabled = NO;
     [self addSubview:_bg];
     self.multipleTouchEnabled = YES;
   }
