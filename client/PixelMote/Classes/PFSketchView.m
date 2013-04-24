@@ -8,6 +8,8 @@
 
 #import "PFSketchView.h"
 
+#import "PFNetworkManager.h"
+
 static const UIEdgeInsets kPadding = {30, 10, 30, 10};
 static const NSInteger kNumberOfColumns = 48;
 static const NSInteger kNumberOfRows = 32;

@@ -84,10 +84,13 @@
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
   [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
   if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+    [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"c" data:[@"+" dataUsingEncoding:NSASCIIStringEncoding]];
     _sketchView.alpha = 1;
     _gamepadView.alpha = 0;
   } else {
+    [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"c" data:[@"-" dataUsingEncoding:NSASCIIStringEncoding]];
     _sketchView.alpha = 0;
     _gamepadView.alpha = 1;
   }

@@ -68,8 +68,7 @@ static const CGFloat kDistanceBetweenItems = 10;
 
   // c for control
   // l for list
-  NSData *data = [[NSData alloc] initWithData:[@"l" dataUsingEncoding:NSASCIIStringEncoding]];
-  [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"c" data:data];
+  [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"c" data:[@"l" dataUsingEncoding:NSASCIIStringEncoding]];
 }
 
 - (void)updateLayoutWithInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

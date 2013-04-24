@@ -160,12 +160,43 @@ static PFNetworkManager *sharedInstance = nil;
       memset(bytes, 0, sizeof(uint8_t) * kMaxPacketSize);
       NSInteger nread = [inputStream read:bytes maxLength:kMaxPacketSize];
 
-      for (NSInteger ix = 0; ix < nread; ++ix) {
+      NSInteger start = 0;
+      
+      if (_readState != PFReadStateNone
+          && _offset < _additionalBytesLength) {
+        NSInteger bytesRemaining = _additionalBytesLength - _offset;
+        NSInteger bytesToRead = MIN(nread, bytesRemaining);
+
+        _offset += bytesToRead;
+        
+        [_mutableData appendBytes:bytes length:sizeof(uint8_t) * bytesToRead];
+        if (bytesToRead == bytesRemaining) {
+          [self didCompleteRead];
+        }
+
+        start += bytesToRead;
+      }
+
+      for (NSInteger ix = start; ix < nread; ++ix) {
         uint8_t byte = bytes[ix];
         [self readByte:byte];
       }
     }
   }
+}
+
+- (void)didCompleteRead {
+  if (_readState == PFReadStateListing) {
+    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:_mutableData];
+    NSArray* animations = [[unarchiver decodeObject] copy];
+
+    _animations = [animations copy];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:PHNetworkManagerDidLoadAnimationsServerNotification object:nil];
+  }
+
+  _mutableData = nil;
+  _readState = PFReadStateNone;
 }
 
 - (id)readByte:(uint8_t)byte {
@@ -198,15 +229,7 @@ static PFNetworkManager *sharedInstance = nil;
         _offset++;
 
         if (_offset == _additionalBytesLength) {
-          NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:_mutableData];
-          NSArray* animations = [[unarchiver decodeObject] copy];
-
-          _animations = [animations copy];
-
-          _mutableData = nil;
-          _readState = PFReadStateNone;
-
-          [[NSNotificationCenter defaultCenter] postNotificationName:PHNetworkManagerDidLoadAnimationsServerNotification object:nil];
+          [self didCompleteRead];
         }
       }
     }
