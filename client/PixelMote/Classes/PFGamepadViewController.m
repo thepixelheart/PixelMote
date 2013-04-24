@@ -8,6 +8,7 @@
 
 #import "PFGamepadViewController.h"
 #import "PFGamepadView.h"
+#import "PFSketchView.h"
 #import "PFNetworkManager.h"
 #import "AnimationCatalogController.h"
 
@@ -15,7 +16,10 @@
 
 @end
 
-@implementation PFGamepadViewController
+@implementation PFGamepadViewController {
+  PFGamepadView *_gamepadView;
+  PFSketchView *_sketchView;
+}
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -36,26 +40,28 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    
-	// Do any additional setup after loading the view.
-    
-    CGRect mainFrame = [UIScreen mainScreen].bounds;
-    PFGamepadView *gamepadView = [[PFGamepadView alloc] init];
-    gamepadView.frame = mainFrame;
-    gamepadView.delegate = self;
-    gamepadView.joystickDelegate = self;
-    gamepadView.statusLabel.text = [NSString stringWithFormat:@"Hello, %@!", alias];
-    [[self view] addSubview:gamepadView];
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  _gamepadView = [[PFGamepadView alloc] init];
+  _gamepadView.frame = self.view.bounds;
+  _gamepadView.autoresizesSubviews = UIViewAutoresizingFlexibleDimensions;
+  _gamepadView.delegate = self;
+  _gamepadView.joystickDelegate = self;
+  _gamepadView.statusLabel.text = [NSString stringWithFormat:@"Hello, %@!", alias];
+  [[self view] addSubview:_gamepadView];
+
+  _sketchView = [[PFSketchView alloc] initWithFrame:self.view.bounds];
+  _sketchView.autoresizingMask = UIViewAutoresizingFlexibleDimensions;
+  _sketchView.userInteractionEnabled = NO;
+  _sketchView.alpha = 0;
+  [self.view addSubview:_sketchView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
+  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated ? UIStatusBarAnimationFade : UIStatusBarAnimationNone];
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
@@ -66,6 +72,36 @@
     NSMutableData *moveData = [[NSMutableData alloc] initWithData:angleData];
     [moveData appendData:velocityData];
     [[PFNetworkManager sharedInstance] sendDataWithMessageType:@"m" data:moveData];
+}
+
+- (BOOL)shouldAutorotate {
+  return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+  return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+  [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+  if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+    _sketchView.alpha = 1;
+    _gamepadView.alpha = 0;
+  } else {
+    _sketchView.alpha = 0;
+    _gamepadView.alpha = 1;
+  }
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+  [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+  if (UIInterfaceOrientationIsLandscape(NIInterfaceOrientation())) {
+    _sketchView.userInteractionEnabled = YES;
+    _gamepadView.userInteractionEnabled = NO;
+  } else {
+    _sketchView.userInteractionEnabled = NO;
+    _gamepadView.userInteractionEnabled = YES;
+  }
 }
 
 - (void)didEndMove

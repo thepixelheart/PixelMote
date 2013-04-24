@@ -8,6 +8,11 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>icon@2x.png</string>
+		<string>icon.png</string>
+	</array>
 	<key>CFBundleIdentifier</key>
 	<string>com.pixelfactory.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -24,22 +29,19 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UIStatusBarHidden</key>
+	<key>UIPrerenderedIcon</key>
 	<true/>
-	<key>CFBundleIconFiles</key>
-	<array>
-		<string>icon@2x.png</string>
-		<string>icon.png</string>
-	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIPrerenderedIcon</key>
-	<true/>
 </dict>
 </plist>

@@ -46,6 +46,7 @@
 		66A6028E17267CB6005523C2 /* NITableViewActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A6028317267CB6005523C2 /* NITableViewActions.m */; };
 		66A6028F17267CB6005523C2 /* NITableViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A6028517267CB6005523C2 /* NITableViewModel.m */; };
 		66A6029217267D95005523C2 /* AnimationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A6029117267D94005523C2 /* AnimationCell.m */; };
+		66A6029517278CAB005523C2 /* PFSketchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A6029417278CAB005523C2 /* PFSketchView.m */; };
 		FD0636721687CDCA0003F00E /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = FD06366F1687CC6B0003F00E /* NSString+MD5Addition.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FD0636731687CDCA0003F00E /* UIDevice+IdentifierAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0636711687CC6B0003F00E /* UIDevice+IdentifierAddition.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FD0636781687D4440003F00E /* PFConnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0636771687D4440003F00E /* PFConnectViewController.m */; };
@@ -173,6 +174,8 @@
 		66A6028617267CB6005523C2 /* NITableViewModel+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NITableViewModel+Private.h"; sourceTree = "<group>"; };
 		66A6029017267D94005523C2 /* AnimationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimationCell.h; path = PixelMote/Classes/AnimationCell.h; sourceTree = "<group>"; };
 		66A6029117267D94005523C2 /* AnimationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimationCell.m; path = PixelMote/Classes/AnimationCell.m; sourceTree = "<group>"; };
+		66A6029317278CAA005523C2 /* PFSketchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PFSketchView.h; path = PixelMote/Classes/PFSketchView.h; sourceTree = "<group>"; };
+		66A6029417278CAB005523C2 /* PFSketchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFSketchView.m; path = PixelMote/Classes/PFSketchView.m; sourceTree = "<group>"; };
 		FD06366E1687CC6B0003F00E /* NSString+MD5Addition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+MD5Addition.h"; path = "PixelMote/Classes/UUID/NSString+MD5Addition.h"; sourceTree = "<group>"; };
 		FD06366F1687CC6B0003F00E /* NSString+MD5Addition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSString+MD5Addition.m"; path = "PixelMote/Classes/UUID/NSString+MD5Addition.m"; sourceTree = "<group>"; };
 		FD0636701687CC6B0003F00E /* UIDevice+IdentifierAddition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIDevice+IdentifierAddition.h"; path = "PixelMote/Classes/UUID/UIDevice+IdentifierAddition.h"; sourceTree = "<group>"; };
@@ -454,6 +457,8 @@
 				FD16AE02167B01FB00AA0F10 /* PFJoystiqView.m */,
 				FD0636791687D46D0003F00E /* PFConnectView.h */,
 				FD06367A1687D46D0003F00E /* PFConnectView.m */,
+				66A6029317278CAA005523C2 /* PFSketchView.h */,
+				66A6029417278CAB005523C2 /* PFSketchView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -635,6 +640,7 @@
 				66A6028E17267CB6005523C2 /* NITableViewActions.m in Sources */,
 				66A6028F17267CB6005523C2 /* NITableViewModel.m in Sources */,
 				66A6029217267D95005523C2 /* AnimationCell.m in Sources */,
+				66A6029517278CAB005523C2 /* PFSketchView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
