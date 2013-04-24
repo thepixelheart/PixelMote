@@ -11,12 +11,15 @@
 NSString* const PHNetworkManagerDidFindServerNotification = @"PHNetworkManagerDidFindServerNotification";
 NSString* const PHNetworkManagerDidRemoveServerNotification = @"PHNetworkManagerDidRemoveServerNotification";
 NSString* const PHNetworkManagerDidLoadAnimationsServerNotification = @"PHNetworkManagerDidLoadAnimationsServerNotification";
+NSString* const PHNetworkManagerStreamNotification = @"PHNetworkManagerStreamNotification";
+NSString* const PHNetworkManagerStreamImageKey = @"PHNetworkManagerStreamImageKey";
 
 static NSInteger kMaxPacketSize = 1024 * 4;
 
 typedef enum {
   PFReadStateNone,
   PFReadStateListing,
+  PFReadStateStream,
 } PFReadState;
 
 @interface PFNetworkManager() <NSNetServiceBrowserDelegate, NSNetServiceDelegate>
@@ -90,7 +93,7 @@ static PFNetworkManager *sharedInstance = nil;
         _outputStream = (__bridge NSOutputStream *)writeStream;
         [_inputStream setDelegate:self];
         [_outputStream setDelegate:self];
-        
+
         [_inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         [_outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         
@@ -193,6 +196,13 @@ static PFNetworkManager *sharedInstance = nil;
     _animations = [animations copy];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:PHNetworkManagerDidLoadAnimationsServerNotification object:nil];
+  } else if (_readState == PFReadStateStream) {
+    UIImage* image = [UIImage imageWithData:_mutableData];
+    image = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:UIImageOrientationDownMirrored];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:PHNetworkManagerStreamNotification
+                                                        object:nil
+                                                      userInfo:@{PHNetworkManagerStreamImageKey:image}];
   }
 
   _mutableData = nil;
@@ -208,11 +218,17 @@ static PFNetworkManager *sharedInstance = nil;
         _additionalBytesLength = -1;
         _buffer = 0;
         break;
+      case '~':
+        _readState = PFReadStateStream;
+        _offset = 0;
+        _additionalBytesLength = -1;
+        _buffer = 0;
+        break;
 
       default:
         break;
     }
-  } else if (_readState == PFReadStateListing) {
+  } else {
     if (_additionalBytesLength == -1) {
       if (_offset < 4) {
         ((uint8_t *)&_buffer)[_offset] = byte;

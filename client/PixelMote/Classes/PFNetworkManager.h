@@ -14,6 +14,9 @@ extern NSString* const PHNetworkManagerDidFindServerNotification;
 extern NSString* const PHNetworkManagerDidRemoveServerNotification;
 extern NSString* const PHNetworkManagerDidLoadAnimationsServerNotification;
 
+extern NSString* const PHNetworkManagerStreamNotification;
+extern NSString* const PHNetworkManagerStreamImageKey;
+
 @interface PFNetworkManager : NSObject <NSStreamDelegate>
 {
     NSInputStream *_inputStream;

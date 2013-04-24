@@ -9,6 +9,7 @@
 #import "PFSketchView.h"
 
 #import "PFNetworkManager.h"
+#import <QuartzCore/QuartzCore.h>
 
 static const UIEdgeInsets kPadding = {30, 10, 30, 10};
 static const NSInteger kNumberOfColumns = 48;
@@ -88,15 +89,33 @@ static const NSInteger kNumberOfRows = 32;
 @end
 
 @implementation PFSketchViewBackground {
+  UIImageView* _imageView;
   uint32_t _pixels[kNumberOfColumns * kNumberOfRows];
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (id)initWithFrame:(CGRect)frame {
   if ((self = [super initWithFrame:frame])) {
+    _imageView = [[UIImageView alloc] init];
+    _imageView.layer.magnificationFilter = kCAFilterNearest;
+    [self addSubview:_imageView];
+
     self.contentMode = UIViewContentModeRedraw;
     bzero(_pixels, sizeof(uint32_t) * kNumberOfRows * kNumberOfColumns);
+
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(didStreamNotification:) name:PHNetworkManagerStreamNotification object:nil];
   }
   return self;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+
+  _imageView.frame = CGRectMake([self leftEdge], [self topEdge], [self width], [self height]);
 }
 
 - (CGRect)insetBounds {
@@ -139,48 +158,6 @@ static const NSInteger kNumberOfRows = 32;
                     pixelSize);
 }
 
-- (void)drawRect:(CGRect)rect {
-  [super drawRect:rect];
-
-  CGContextRef cx = UIGraphicsGetCurrentContext();
-  CGContextSetShouldAntialias(cx, NO);
-  CGContextSetAllowsAntialiasing(cx, NO);
-
-  CGFloat pixelSize = [self pixelSize];
-  CGFloat width = [self width];
-  CGFloat leftEdge = [self leftEdge];
-  CGFloat topEdge = [self topEdge];
-  CGFloat lineWidth = NIIsRetina() ? 0.5 : 1;
-  [RGBCOLOR(0x11, 0x11, 0x11) set];
-  UIRectFill(self.bounds);
-
-  CGRect pixelFrame = CGRectMake(0, 0, floorf(pixelSize), floorf(pixelSize));
-  for (CGFloat ix = 0; ix < kNumberOfColumns; ++ix) {
-    pixelFrame.origin.x = leftEdge + ix * pixelSize;
-
-    for (CGFloat iy = 0; iy < kNumberOfRows; ++iy) {
-      pixelFrame.origin.y = topEdge + iy * pixelSize;
-      NSInteger index = iy * kNumberOfColumns + ix;
-      uint32_t color = _pixels[index];
-      uint8_t* colorComponents = (uint8_t *)&color;
-
-      CGContextSetFillColorWithColor(cx, RGBACOLOR(colorComponents[0], colorComponents[1], colorComponents[2], colorComponents[3] / 255.0).CGColor);
-      CGContextFillRect(cx, pixelFrame);
-    }
-  }
-
-  [RGBCOLOR(0x33, 0x33, 0x33) set];
-
-  for (CGFloat ix = leftEdge; ix <= leftEdge + width; ix += pixelSize) {
-    CGContextFillRect(cx, CGRectMake(floorf(ix), self.insetBounds.origin.y,
-                                     lineWidth, self.insetBounds.size.height));
-  }
-  for (CGFloat iy = topEdge; iy <= CGRectGetMaxY(self.insetBounds); iy += pixelSize) {
-    CGContextFillRect(cx, CGRectMake(leftEdge, floorf(iy),
-                                     width, lineWidth));
-  }
-}
-
 - (void)setRed:(uint8_t)red green:(uint8_t)green blue:(uint8_t)blue alpha:(uint8_t)alpha atPixel:(CGPoint)pixel {
   NSInteger index = (NSInteger)pixel.y * kNumberOfColumns + (NSInteger)pixel.x;
   uint32_t color = _pixels[index];
@@ -191,6 +168,14 @@ static const NSInteger kNumberOfRows = 32;
   colorComponents[2] = blue * perc + colorComponents[2] * (1 - perc);
   colorComponents[3] = 255;
   _pixels[index] = color;
+}
+
+#pragma mark - NSNotification
+
+- (void)didStreamNotification:(NSNotification *)notification {
+  UIImage* image = notification.userInfo[PHNetworkManagerStreamImageKey];
+  _imageView.image = image;
+  [_imageView sizeToFit];
 }
 
 @end
