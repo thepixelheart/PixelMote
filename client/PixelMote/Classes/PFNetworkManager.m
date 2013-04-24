@@ -114,13 +114,13 @@ static PFNetworkManager *sharedInstance = nil;
 
 - (void)closeNetworkConnection
 {
-    if (_inputStream && [_inputStream streamStatus] == NSStreamStatusOpen) {
+    if (_inputStream) {
         [_inputStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         [_inputStream close];
         _inputStream = nil;
     }
     
-    if (_outputStream && [_outputStream streamStatus] == NSStreamStatusOpen) {
+    if (_outputStream) {
         [_outputStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         [_outputStream close];
         _outputStream = nil;
